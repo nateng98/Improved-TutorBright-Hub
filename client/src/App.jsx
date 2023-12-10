@@ -10,6 +10,7 @@ import Layout from "./Layout";
 // from pages folder
 import IndexPage from "./pages/IndexPage";
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -19,6 +20,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<IndexPage />}/>
         <Route path={'/login'} element={<LoginPage />}/>
+        <Route path={'/Register'} element={<RegisterPage />}/>
       </Route>
     </Routes>
   );
