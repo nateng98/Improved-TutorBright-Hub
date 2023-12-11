@@ -25,7 +25,14 @@ app.post('/register', async (req, res) => {
   } catch (e) {
     res.status(400).json(e);
   }
+});
 
+app.post('/login', (req, res) => {
+  const {username, password} = red.body;
+  const userDoc = User.findOne({username});
+  // since the password is encrypted, use this to compare whether the password is correct
+  const passOk = bcrypt.compareSync(password, userDoc.password);
+  res.json(passOk);
 });
 
 app.listen(4000);
