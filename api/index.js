@@ -14,6 +14,7 @@ app.use(express.json());
 // connect to Mongoose Database
 mongoose.connect('mongodb+srv://nateng98:EqZnMVSootHXtxhG@pyroscript.neimdc1.mongodb.net/?retryWrites=true&w=majority');
 
+// end point for register
 app.post('/register', async (req, res) => {
   const {username, password} = req.body;
   try {
@@ -27,9 +28,10 @@ app.post('/register', async (req, res) => {
   }
 });
 
-app.post('/login', (req, res) => {
-  const {username, password} = red.body;
-  const userDoc = User.findOne({username});
+// end point for login
+app.post('/login', async (req, res) => {
+  const {username, password} = req.body;
+  const userDoc = await User.findOne({username}); // find the username that match with the input
   // since the password is encrypted, use this to compare whether the password is correct
   const passOk = bcrypt.compareSync(password, userDoc.password);
   res.json(passOk);
