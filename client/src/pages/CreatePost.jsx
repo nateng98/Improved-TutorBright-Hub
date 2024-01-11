@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { Navigate } from "react-router-dom";
 
 const modules = {
   toolbar: [
@@ -44,6 +45,7 @@ export default function CreatePost() {
   const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
   const [files, setFiles] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
   async function createNewPost(ev) {
     // create data object for 'a post'
@@ -58,7 +60,14 @@ export default function CreatePost() {
       method: 'POST',
       body: data,
     });
-    await response.json();
+    // set redirect to homepage to true after create a post
+    if(response.ok) {
+      setRedirect(true);
+    }
+  }
+  // redirect to home page after creating a post
+  if(redirect) {
+    return <Navigate to={'/'}/>
   }
 
   return (
