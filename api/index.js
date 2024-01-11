@@ -6,6 +6,9 @@ const User = require('./models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const multer = require('multer');
+const uploadMiddleware = multer({dest: 'uploads/'});
+const fs = require('fs');
 
 // use generate salt to encryt password on mongoose
 const salt = bcrypt.genSaltSync(10);
@@ -52,16 +55,23 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.get('/profile', (req, res) => {
+app.get('/profile', (req,res) => {
   const {token} = req.cookies;
-  jwt.verify(token, secret, {}, (err, info) => {
-    if(err) throw err;
+  jwt.verify(token, secret, {}, (err,info) => {
+    if (err) throw err;
     res.json(info);
-  })
+  });
 });
 
-app.post('/logout', (req, res) => {
+app.post('/logout', (req,res) => {
   res.cookie('token', '').json('ok');
-})
+});
+
+app.post('/post', uploadMiddleware.single('file'), (req, res) => {
+  const {originalname} = req.file;
+  const parts = originalname.split('.');
+  const ext = parts[[parts.length - 1]]
+  res.json({ext});
+});
 
 app.listen(4000);
