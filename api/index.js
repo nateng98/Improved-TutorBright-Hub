@@ -68,9 +68,13 @@ app.post('/logout', (req,res) => {
 });
 
 app.post('/post', uploadMiddleware.single('file'), (req, res) => {
-  const {originalname} = req.file;
+  const {originalname, path} = req.file;
   const parts = originalname.split('.');
-  const ext = parts[[parts.length - 1]]
+  //get the extension to save the file as with the extension in upload
+  const ext = parts[parts.length - 1];
+  //file name + . + file extension
+  const newPath = path + '.' + ext;
+  fs.renameSync(path, newPath);
   res.json({ext});
 });
 
