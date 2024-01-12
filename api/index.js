@@ -77,20 +77,31 @@ app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
   const newPath = path + '.' + ext;
   fs.renameSync(path, newPath);
 
-  // get all title, summary and content Create post clicked
-  const {title, summary, content} = req.body;
-  const postDoc = await Post.create({
-    title,
-    summary,
-    content,
-    cover: newPath
+  const {token} = req.cookies;
+  jwt.verify(token, secret, {}, async (err,info) => {
+    if (err) throw err;
+     // get all title, summary and content Create post clicked
+    const {title, summary, content} = req.body;
+    const postDoc = await Post.create({
+      title,
+      summary,
+      content,
+      cover: newPath,
+      // grab user name
+      author: info.id
+    });
+  res.json(postDoc);
   });
 
-  res.json(postDoc);
 });
 
 app.get('/post', async (req,res) => {
-  res.json(await Post.find());
+  // only show the username of author, not password
+  res.json(await Post.find()
+    .populate('author', ['username'])
+    .sort({createdAt: -1}) // order by the newest
+    .limit(20) // limit 20 posts
+    );
 })
 
 app.listen(4000);
