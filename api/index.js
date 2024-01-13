@@ -18,6 +18,7 @@ const secret = 'randomstring98'
 app.use(cors({credentials:true, origin:'http://localhost:5173'})); // if using credential (LoginPage.jsx), we have to provide more infomation (credential: true, and origin: host link)
 app.use(express.json());
 app.use(cookieParser());
+app.use('/uploads', express.static(__dirname + '/uploads')); // end point for cover
 
 // connect to Mongoose Database
 mongoose.connect('mongodb+srv://nateng98:EqZnMVSootHXtxhG@pyroscript.neimdc1.mongodb.net/?retryWrites=true&w=majority');

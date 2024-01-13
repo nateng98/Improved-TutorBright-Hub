@@ -4,7 +4,8 @@ export default function Post({title, summary, cover, content, createdAt, author}
   return (
     <div className="post">
       <div className="image">
-        <img src="" alt="" />
+        {/* need end point for cover -> index.js*/}
+        <img src={'http://localhost:4000/'+cover} alt="" />
       </div>
       <div className="texts">
         <h2>{title}</h2>
