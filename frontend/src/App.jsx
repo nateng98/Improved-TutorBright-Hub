@@ -5,12 +5,10 @@ import { Routes, Route } from 'react-router-dom'
 import Topbar from './scenes/global/Topbar';
 import SideMenu from './scenes/global/SideMenu';
 import DashBoard from './scenes/dashboard';
-// import Students from './scenes/students'
-// import Invoices from './scenes/invoices'
-// import Line from './scenes/line'
-// import AccountMenu from './scenes/accountmenu'
-// import Setting from './scenes/setting'
-// import Calendar from './scenes/calendar'
+import Students from './scenes/students'
+import Invoices from './scenes/invoices'
+import Line from './scenes/line'
+import Calendar from './scenes/calendar'
 
 
 function App() {
@@ -26,12 +24,10 @@ function App() {
             <Topbar />
             <Routes>
               <Route path='/' element={<DashBoard/ >} />
-              {/* <Route path='/calendar' element={<Calendar/ >} />
               <Route path='/students' element={<Students/ >} />
               <Route path='/invoices' element={<Invoices/ >} />
+              <Route path='/calendar' element={<Calendar/ >} />
               <Route path='/line' element={<Line/ >} />
-              <Route path='/accountmenu' element={<AccountMenu/ >} />
-              <Route path='/setting' element={<Setting/ >} /> */}
             </Routes>
           </main>
         </div>
